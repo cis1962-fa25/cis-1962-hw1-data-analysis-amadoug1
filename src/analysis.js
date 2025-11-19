@@ -1,12 +1,8 @@
-/**
- * Step 0: Import the dependencies, fs and papaparse
- */
+
 const fs = require('fs');
 const Papa = require('papaparse');
 
-/**
- * Small helper: treat empty / "null" / missing as null value
- */
+
 function isMissing(value) {
     if (value === null || value === undefined) return true;
     const str = String(value).trim();
@@ -15,9 +11,7 @@ function isMissing(value) {
     return false;
 }
 
-/**
- * Convert verified_purchase string to a real boolean
- */
+
 function toBoolean(value) {
     if (typeof value === 'boolean') return value;
     if (value === null || value === undefined) return false;
@@ -25,13 +19,7 @@ function toBoolean(value) {
     return str === 'true' || str === '1' || str === 'yes' || str === 'y';
 }
 
-/**
- * [TODO] Step 1: Parse the Data
- *      Parse the data contained in a given file into a JavaScript objectusing the modules fs and papaparse.
- *      According to Kaggle, there should be 2514 reviews.
- * @param {string} filename - path to the csv file to be parsed
- * @returns {Object} - The parsed csv file of app reviews from papaparse.
- */
+
 function parseData(filename) {
     // Read the whole CSV file as a string
     const csvString = fs.readFileSync(filename, 'utf8');
@@ -46,11 +34,6 @@ function parseData(filename) {
     return parsed;
 }
 
-/**
- * [TODO] Step 2: Clean the Data
- * @param {Object} csv - a parsed csv file of app reviews
- * @returns {Object[]} - a cleaned csv file with proper data types and removed null values
- */
 function cleanData(csv) {
     // csv.data is the array of rows from papaparse
     const rows = csv.data;
@@ -118,16 +101,7 @@ function cleanData(csv) {
     return cleaned;
 }
 
-/**
- * [TODO] Step 3: Sentiment Analysis
- *      Write a function, labelSentiment, that takes in a rating as an argument
- *      and outputs 'positive' if rating is greater than 4, 'negative' is rating is below 2,
- *      and 'neutral' if it is between 2 and 4.
- * @param {Object} review - Review object
- * @param {number} review.rating - the numerical rating to evaluate
- * @returns {string} - 'positive' if rating is greater than 4, negative is rating is below 2,
- *                      and neutral if it is between 2 and 4.
- */
+
 function labelSentiment({ rating }) {
     // make sure rating is a number
     const r = typeof rating === 'number' ? rating : parseFloat(r);
@@ -146,11 +120,7 @@ function labelSentiment({ rating }) {
     }
 }
 
-/**
- * [TODO] Step 3: Sentiment Analysis by App
- * @param {Object[]} cleaned - the cleaned csv data
- * @returns {{app_name: string, positive: number, neutral: number, negative: number}[]}
- */
+
 function sentimentAnalysisApp(cleaned) {
     const appStats = {}; // key: app_name, value: { app_name, positive, neutral, negative }
 
@@ -194,11 +164,6 @@ function sentimentAnalysisApp(cleaned) {
     return result;
 }
 
-/**
- * [TODO] Step 3: Sentiment Analysis by Language
- * @param {Object[]} cleaned - the cleaned csv data
- * @returns {{lang_name: string, positive: number, neutral: number, negative: number}[]}
- */
 function sentimentAnalysisLang(cleaned) {
     const langStats = {}; // key: language code, value: { lang_name, positive, neutral, negative }
 
@@ -239,11 +204,7 @@ function sentimentAnalysisLang(cleaned) {
     return result;
 }
 
-/**
- * [TODO] Step 4: Statistical Analysis
- * @param {Object[]} cleaned - the cleaned csv data
- * @returns {{mostReviewedApp: string, mostReviews: number, mostUsedDevice: String, mostDevices: number, avgRating: number}}
- */
+
 function summaryStatistics(cleaned) {
     // handle empty case just in case
     if (!cleaned || cleaned.length === 0) {
