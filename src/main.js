@@ -1,7 +1,6 @@
 /**
- * You may use this file to call the functions within your code for testing purposes. 
+ * You may use this file to call the functions within your code for testing purposes.
  * Code written in this file will not be graded or submitted.
- * The steps are labeled for your convenience.
  */
 const {
     parseData,
@@ -11,23 +10,27 @@ const {
     summaryStatistics,
 } = require('./analysis');
 
-/**
- * Step 1: Call the parseData function
- *      From the analysis.js file, call the parseData method with the correct file path to the data file.
- */
+function main() {
+    // Step 1: Call parseData with the CSV file path
+    const filename = './src/multilingual_mobile_app_reviews_2025.csv';
+    const parsed = parseData(filename);
 
-/**
- * Step 2: Call the cleanData function
- *      Pass the csv as an argument to the cleanData function.
- */
+    // Step 2: Clean the data
+    const cleaned = cleanData(parsed);
 
-/**
- * Step 3: Sentiment Analysis
- *      Call the printSentimentAnalysis function get a summary
- *      of the sentiments of apps across different apps and languages.
- */
+    // Step 3: Sentiment analysis
+    const appSentiments = sentimentAnalysisApp(cleaned);
+    const langSentiments = sentimentAnalysisLang(cleaned);
 
-/**
- * Step 4: Statistical Analysis
- *      Call the printAnalysis function to get some summary statistics of the cleaned data.
- */
+    // Step 4: Statistical analysis
+    const summary = summaryStatistics(cleaned);
+
+    // Print some info so we can see results when we run "node src/main.js"
+    console.log('Number of cleaned reviews:', cleaned.length);
+    console.log('Sentiment by app:', appSentiments);
+    console.log('Sentiment by language:', langSentiments);
+    console.log('Summary statistics:', summary);
+}
+
+// Actually call the function so ESLint knows these are used
+main();
