@@ -1,7 +1,4 @@
-/**
- * You may use this file to call the functions within your code for testing purposes.
- * Code written in this file will not be graded or submitted.
- */
+
 const {
     parseData,
     cleanData,
